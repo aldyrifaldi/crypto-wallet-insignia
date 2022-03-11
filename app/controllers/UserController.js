@@ -15,7 +15,7 @@ module.exports = {
                     email: req.body.email,
                     password: await bcrypt.hash(req.body.password,10)
                 },
-                 include: {
+                include: {
                     balanceLogs: true, // populate model BalanceLog relation
                     transfers: true, // populate model Transfer relation 
                 },
