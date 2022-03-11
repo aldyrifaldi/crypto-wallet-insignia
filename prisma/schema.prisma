@@ -18,6 +18,8 @@ model User {
   balance Decimal @default(0)
   balanceLogs BalanceLog[]
   transfers Transfer[]
+  createdAt DateTime
+  updatedAt DateTime
 }
 
 model BalanceLog {
@@ -26,6 +28,8 @@ model BalanceLog {
   amount Decimal
   user User @relation(fields: [userId],references: [id])
   status BalanceStatus
+  createdAt DateTime
+  updatedAt DateTime
 }
 
 enum BalanceStatus {
@@ -39,6 +43,8 @@ model Transfer {
   user User @relation(fields: [userId],references: [id])
   amount Decimal @default(0)
   status TransferStatus
+  createdAt DateTime
+  updatedAt DateTime
 }
 
 
