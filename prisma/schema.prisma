@@ -6,6 +6,45 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  password String
+  balance Decimal @default(0)
+  balanceLogs BalanceLog[]
+  transfers Transfer[]
+}
+
+model BalanceLog {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId],references: [id])
+  status BalanceStatus
+}
+
+enum BalanceStatus {
+  DEBIT
+  CREDIT
+}
+
+model Transfer {
+  id Int @id @default(autoincrement())
+  userId Int 
+  user User @relation(fields: [userId],references: [id])
+  amount Decimal @default(0)
+  status TransferStatus
+}
+
+
+enum TransferStatus {
+  FINISH
+  SETTLEMENT
+  PENDING
+  CANCEL
+  ERROR  
 }
