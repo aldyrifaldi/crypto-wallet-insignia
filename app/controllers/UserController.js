@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 
 module.exports = {
     store: async (req,res) => {
-        console.log(req.body);
         try {
 
             // create user
@@ -49,7 +48,5 @@ module.exports = {
                 errors: e
             },500)
         }
-
-       
     },
 }
