@@ -37,7 +37,7 @@ module.exports = {
                     balance: user.balance,
                     transfers: user.transfers,
                     balance_logs: user.balanceLogs,
-                    accessToken: token,
+                    access_token: token,
                 }
             },201)
             
