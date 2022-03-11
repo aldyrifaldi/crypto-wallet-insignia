@@ -15,7 +15,13 @@ module.exports = {
                 }
             })   
 
-          
+            await prisma.balanceLog.create({
+                data: {
+                    userId: user.id,
+                    status: "DEBIT",
+                    amount: req.body.amount
+                }
+            })
             
             return res.json({
                 status: "success",
