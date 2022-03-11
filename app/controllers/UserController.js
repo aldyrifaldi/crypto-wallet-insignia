@@ -1,7 +1,8 @@
 const {Prisma, PrismaClient} = require('@prisma/client')
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
+require('dotenv').config()
 
 module.exports = {
     store: async (req,res) => {
@@ -20,6 +21,13 @@ module.exports = {
                 },
             })
 
+            // generate JWT Token
+            const token = 'Bearer ' + jwt.sign({
+                id: user.id
+            }, process.env.JWT_SECRET, {
+                expiresIn: 86400 //24h expired
+            });
+
             // response if create success
             return res.json({
                 status: "success",
@@ -28,7 +36,8 @@ module.exports = {
                     email: user.email,
                     balance: user.balance,
                     transfers: user.transfers,
-                    balance_logs: user.balanceLogs
+                    balance_logs: user.balanceLogs,
+                    accessToken: token,
                 }
             },201)
             
