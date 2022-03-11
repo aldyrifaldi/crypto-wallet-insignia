@@ -27,12 +27,12 @@ model BalanceLog {
   userId Int
   amount Decimal
   user User @relation(fields: [userId],references: [id])
-  status BalanceStatus
+  status BalanceLogStatus
   createdAt DateTime
   updatedAt DateTime
 }
 
-enum BalanceStatus {
+enum BalanceLogStatus {
   DEBIT
   CREDIT
 }
