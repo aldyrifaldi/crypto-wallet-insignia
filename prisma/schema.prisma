@@ -23,6 +23,7 @@ model User {
 model BalanceLog {
   id Int @id @default(autoincrement())
   userId Int
+  amount Decimal
   user User @relation(fields: [userId],references: [id])
   status BalanceStatus
 }
