@@ -9,6 +9,8 @@ var usersRouter = require('./routes/users');
 var topupsRouter = require('./routes/topups');
 var balanceRouter = require('./routes/balance');
 var transfersRouter = require('./routes/transfers');
+var topTransactionsRouter = require('./routes/top-transactions');
+var topUsersRouter = require('./routes/top-users');
 
 var app = express();
 
@@ -27,6 +29,8 @@ app.use('/user', usersRouter);
 app.use('/topup', topupsRouter);
 app.use('/balance', balanceRouter);
 app.use('/transfer', transfersRouter);
+app.use('/top_transaction_per_user',topTransactionsRouter);
+app.use('/top_users',topUsersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
