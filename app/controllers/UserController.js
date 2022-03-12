@@ -13,15 +13,12 @@ module.exports = {
                 data: {
                     username: req.body.username,
                     email: req.body.email,
-                    password: await bcrypt.hash(req.body.password,10)
-                }
-            })
-
-            // create default balance current user
-            await prisma.Balance.create({
-                data: {
-                    balance: 0,
-                    userId: user.id
+                    password: await bcrypt.hash(req.body.password,10),
+                    balance: {
+                        create: {
+                            balance: 0
+                        }
+                    }
                 }
             })
 
