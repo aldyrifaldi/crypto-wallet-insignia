@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const UserController = require('../app/controllers/UserController.js')
 
-/* GET users listing. */
+// create user 
 router.post('/', UserController.store);
 
 module.exports = router;
