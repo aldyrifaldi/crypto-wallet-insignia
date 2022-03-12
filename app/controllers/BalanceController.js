@@ -4,16 +4,19 @@ const prisma = new PrismaClient()
 module.exports = {
     index: async (req,res) => {
         try {
-            const balance = await prisma.Balance.findUnique({
+            const user = await prisma.user.findUnique({
                 where: {
-                    userId: req.user.id
+                    id: req.user.id
                 },
+                include: {
+                    balance: true
+                }
             })
 
             return res.json({
                 status: "success",
                 data: {
-                    balance: balance.balance
+                    balance: user.balance.balance
                 }
             })
         } catch (error) {
