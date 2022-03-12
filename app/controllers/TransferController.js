@@ -3,6 +3,8 @@ const prisma = new PrismaClient()
 
 module.exports = {
     store: async (req,res) => {
+        try {
+           
             const userTarget = await prisma.User.findUnique({
                 where: { username: req.body.to_username },
             })
@@ -92,5 +94,12 @@ module.exports = {
             return res.status(204).json({
                 status: "success"
             })
+             
+        } catch (error) {
+            return res.status(500).json({
+                status: "internal server error",
+                errors: error
+            })
+        }
     }
 }
