@@ -14,11 +14,15 @@ module.exports = {
                     username: req.body.username,
                     email: req.body.email,
                     password: await bcrypt.hash(req.body.password,10)
-                },
-                include: {
-                    balanceLogs: true, // populate model BalanceLog relation
-                    transfers: true, // populate model Transfer relation 
-                },
+                }
+            })
+
+            // create default balance current user
+            await prisma.Balance.create({
+                data: {
+                    balance: 0,
+                    userId: user.id
+                }
             })
 
             // generate JWT Token
