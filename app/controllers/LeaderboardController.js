@@ -43,7 +43,10 @@ module.exports = {
     },
 
     topTransactionsPerUser: async(req,res) => {
-        const users = await prisma.user.findMany({
+        const user = await prisma.user.findUnique({
+            where: {
+                id: req.user.id, 
+            },
             include: {
                 balanceLogs: true,
                 transfers: true,
@@ -51,34 +54,29 @@ module.exports = {
             }
         })
 
-        const usersSumBalanceLogs = users.map((user,index) => {
 
-            // sum debit balance from user balanceLogs
-            balanceDebit = 0
-            user.balanceLogs.map((balanceLog,i) => {
-                if (balanceLog.status == "DEBIT") {
-                    balanceDebit += parseInt(balanceLog.amount)
+        const usersSumBalanceLogs = user.balanceLogs.map((balanceLog,i) => {
+            if (balanceLog.status == "DEBIT") {
+                // convert amount value of debit from positive to negative
+                return {
+                    username: user.username,
+                    amount: - parseInt(balanceLog.amount),
+                    status: balanceLog.status
                 }
-            })
-
-            // sum credit balance from user balanceLogs
-            balanceCredit = 0
-            user.balanceLogs.map((balanceLog,i) => {
-                if (balanceLog.status == "CREDIT") {
-                    balanceCredit += parseInt(balanceLog.amount)
+            }
+            else {
+                return {
+                    username: user.username,
+                    amount: parseInt(balanceLog.amount),
+                    status: balanceLog.status
                 }
-            })
-
-            return {
-                username: user.username, 
-                amount: balanceCredit - balanceDebit, 
-                transactions: user.balanceLogs,
             }
         })
 
         
         const data =  usersSumBalanceLogs.sort((a,b) => { // sort user by transaction
-            return b.amount - a.amount 
+            
+            return Math.abs(b.amount) - Math.abs(a.amount) // Math.abs use for convert from negative number to postive number 
         }).slice(0,10) // limit data return only 10 records
 
         return res.status(200).json({
