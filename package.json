@@ -19,5 +19,18 @@
   },
   "devDependencies": {
     "prisma": "^3.10.0"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldyrifaldi/challange-rest-api-currency-insignia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aldyrifaldi/challange-rest-api-currency-insignia/issues"
+  },
+  "homepage": "https://github.com/aldyrifaldi/challange-rest-api-currency-insignia#readme",
+  "description": ""
 }
